@@ -18,7 +18,7 @@ body.dark-mode {
 
 .container {
     position: relative;
-    max-width: 1000px; /* Establece el ancho máximo */
+    max-width: 750px; /* Establece el ancho máximo */
     width: 100%; /* Permite que se ajuste al 100% en pantallas más pequeñas */
     margin: 0 auto; /* Centra el formulario en pantallas grandes */
 
