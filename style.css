@@ -17,8 +17,10 @@ body.dark-mode {
 }
 
 .container {
-    position: relative; /* Permitir posicionamiento relativo de los elementos hijos */
-}
+    position: relative;
+    max-width: 1000px; /* Establece el ancho máximo */
+    width: 100%; /* Permite que se ajuste al 100% en pantallas más pequeñas */
+    margin: 0 auto; /* Centra el formulario en pantallas grandes */
 
 .toggle-container {
     position: absolute;
