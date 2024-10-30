@@ -13,10 +13,6 @@
         </div>
         <div class="calculator">
             <h1>Calculadora</h1>
-            <div class="toggle-container">
-                <button id="toggle-mode" onclick="toggleMode()">Modo Oscuro</button>
-            </div>
-            
             <input type="number" id="DI" placeholder="Dinero Inicial (DI)">
             <input type="number" id="I" placeholder="Interés diario (%)">
             <input type="number" id="T" placeholder="Tiempo (T)">
@@ -24,6 +20,7 @@
             <input type="number" id="CR" placeholder="Costo de Retiro (%) (opcional)">
             <button onclick="calculate()">Calcular</button>
             <p id="result"></p>
+            <div id="summary"></div> <!-- Contenedor para el resumen -->
         </div>
     </div>
     <script src="script.js"></script>
