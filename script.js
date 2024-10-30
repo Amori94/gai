@@ -82,6 +82,12 @@ function toggleMode() {
 
         button.textContent = "Modo Pastel";
     }
+
+function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.style.display = 'none'); // Oculta todas las pestañas
+    document.getElementById(tabId).style.display = 'block'; // Muestra la pestaña seleccionada
+}
     
 let portfolios = JSON.parse(localStorage.getItem('portfolios')) || []; // Cargar carteras guardadas
 
