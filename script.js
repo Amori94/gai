@@ -82,4 +82,64 @@ function toggleMode() {
 
         button.textContent = "Modo Pastel";
     }
+    
+let portfolios = JSON.parse(localStorage.getItem('portfolios')) || []; // Cargar carteras guardadas
+
+function savePortfolios() {
+    localStorage.setItem('portfolios', JSON.stringify(portfolios)); // Guardar en localStorage
+}
+
+function createNewPortfolio() {
+    const name = prompt("Ingresa el nombre de la nueva cartera:");
+    const initialAmount = parseFloat(prompt("Ingresa el monto inicial:"));
+    
+    if (name && initialAmount) {
+        portfolios.push({
+            name: name,
+            initialAmount: initialAmount,
+            currentAmount: initialAmount,
+            dailyGain: 0
+        });
+        savePortfolios();
+        renderPortfolios();
+    } else {
+        alert("Por favor ingresa un nombre y un monto inicial válido.");
+    }
+}
+
+function addDailyGain(index) {
+    const gain = parseFloat(prompt("Ingresa la ganancia diaria:"));
+    if (!isNaN(gain)) {
+        portfolios[index].currentAmount += gain;
+        portfolios[index].dailyGain = gain;
+        savePortfolios();
+        renderPortfolios();
+    } else {
+        alert("Por favor ingresa una ganancia válida.");
+    }
+}
+
+function renderPortfolios() {
+    const portfoliosList = document.getElementById('portfolios-list');
+    portfoliosList.innerHTML = '';
+    
+    portfolios.forEach((portfolio, index) => {
+        const portfolioDiv = document.createElement('div');
+        portfolioDiv.classList.add('portfolio-item');
+        
+        portfolioDiv.innerHTML = `
+            <h3>${portfolio.name}</h3>
+            <p>Monto Inicial: ${portfolio.initialAmount.toFixed(2)}</p>
+            <p>Monto Actual: ${portfolio.currentAmount.toFixed(2)}</p>
+            <p>Ganancia Diaria: ${portfolio.dailyGain.toFixed(2)}</p>
+            <button onclick="addDailyGain(${index})">Agregar Ganancia Diaria</button>
+        `;
+        
+        portfoliosList.appendChild(portfolioDiv);
+    });
+}
+
+// Renderizar las carteras al cargar la página
+document.addEventListener('DOMContentLoaded', renderPortfolios);
+
 }
