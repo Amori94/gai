@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Inversión</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="toggle-container">
+            <button id="toggle-mode" onclick="toggleMode()">Modo Oscuro</button>
+        </div>
+        <div class="calculator">
+            <h1>Calculadora de Inversión</h1>
+            <input type="number" id="DI" placeholder="Dinero Inicial (DI)">
+            <input type="number" id="I" placeholder="Interés diario (%)">
+            <input type="number" id="T" placeholder="Tiempo (T)">
+            <input type="number" id="A" placeholder="Acumulado (A)">
+            <input type="number" id="CR" placeholder="Costo de Retiro (%) (opcional)">
+            <button onclick="calculate()">Calcular</button>
+            <p id="result"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
