@@ -11,7 +11,13 @@
         <div class="toggle-container">
             <button id="toggle-mode" onclick="toggleMode()">Modo Oscuro</button>
         </div>
-        <div class="calculator">
+
+        <div class="tabs">
+            <button onclick="showTab('calculator')">Calculadora</button>
+            <button onclick="showTab('portfolio')">Cartera de Inversiones</button>
+        </div>
+        
+        <div id="calculator" class="tab-content">
             <h1>Calculadora</h1>
             <input type="number" id="DI" placeholder="Dinero Inicial (DI)">
             <input type="number" id="I" placeholder="Interés diario (%)">
@@ -22,6 +28,12 @@
             <p id="result"></p>
             <div id="summary"></div> <!-- Contenedor para el resumen -->
         </div>
+
+        <div id="portfolio" class="tab-content" style="display: none;">
+            <h2>Cartera de Inversiones</h2>
+            <button onclick="createNewPortfolio()">Crear Cartera Nueva</button>
+        <div id="portfolios-list"></div>
+</div>
     </div>
     <script src="script.js"></script>
 </body>
