@@ -125,6 +125,27 @@ function addDailyGain(index) {
     }
 }
 
+// Nueva función para retirar dinero de una cartera
+function withdrawAmount(index) {
+    const withdrawal = parseFloat(prompt("Ingresa la cantidad que deseas retirar:"));
+    if (!isNaN(withdrawal) && withdrawal <= portfolios[index].currentAmount) {
+        portfolios[index].currentAmount -= withdrawal;
+        savePortfolios();
+        renderPortfolios();
+    } else {
+        alert("Por favor ingresa una cantidad válida que no exceda el monto actual.");
+    }
+}
+
+// Nueva función para eliminar una cartera
+function deletePortfolio(index) {
+    if (confirm("¿Estás seguro de que deseas eliminar esta cartera?")) {
+        portfolios.splice(index, 1);
+        savePortfolios();
+        renderPortfolios();
+    }
+}
+
 function renderPortfolios() {
     const portfoliosList = document.getElementById('portfolios-list');
     portfoliosList.innerHTML = '';
@@ -139,6 +160,8 @@ function renderPortfolios() {
             <p>Monto Actual: ${portfolio.currentAmount.toFixed(2)}</p>
             <p>Ganancia Diaria: ${portfolio.dailyGain.toFixed(2)}</p>
             <button onclick="addDailyGain(${index})">Agregar Ganancia Diaria</button>
+            <button onclick="withdrawAmount(${index})">Retirar Dinero</button>
+            <button onclick="deletePortfolio(${index})">Eliminar Cartera</button>
         `;
         
         portfoliosList.appendChild(portfolioDiv);
