@@ -1,52 +1,11 @@
-function calculate() {
-    let DI = parseFloat(document.getElementById('DI').value) || null;
-    let I = (parseFloat(document.getElementById('I').value) || null) / 100;
-    let T = parseFloat(document.getElementById('T').value) || null;
-    let A = parseFloat(document.getElementById('A').value) || null;
-    let CR = (parseFloat(document.getElementById('CR').value) || 0) / 100;
-
-    let resultText = '';
-    let summaryText = ''; // Variable para el texto del resumen
-
-    if (DI === null && I !== null && T !== null && A !== null) {
-        DI = A / ((1 + I) ** T);
-        resultText = `El dinero inicial debería ser: ${DI.toFixed(2)}`;
-    } else if (I === null && DI !== null && T !== null && A !== null) {
-        I = (A / DI) ** (1 / T) - 1;
-        resultText = `La tasa de interés diaria debería ser: ${(I * 100).toFixed(2)}%`;
-    } else if (T === null && DI !== null && I !== null && A !== null) {
-        T = Math.log(A / DI) / Math.log(1 + I);
-        resultText = `Con estas variables, llegarías a ese monto en: ${T.toFixed(2)} días`;
-    } else if (A === null && DI !== null && I !== null && T !== null) {
-        A = DI * ((1 + I) ** T);
-        resultText = `El monto acumulado (A) sería: ${A.toFixed(2)}`;
-    } else {
-        document.getElementById('result').innerText = 'Por favor, deja una de las variables vacía.';
-        document.getElementById('summary').innerText = '';
-        return;
-    }
-
-    if (CR > 0 && A !== null) {
-        A = A * (1 - CR);
-        resultText += ` (después del costo de retiro: ${A.toFixed(2)})`;
-    }
-
-    // Crear el resumen de valores ingresados
-    summaryText = `
-        <strong>Resumen de Valores:</strong><br>
-        Dinero Inicial (DI): ${DI ? DI.toFixed(2) : 'No ingresado'}<br>
-        Interés Diario (I): ${I ? (I * 100).toFixed(2) + '%' : 'No ingresado'}<br>
-        Tiempo (T): ${T ? T.toFixed(2) + ' días' : 'No ingresado'}<br>
-        Acumulado (A): ${A ? A.toFixed(2) : 'No ingresado'}<br>
-        Costo de Retiro (CR): ${CR ? (CR * 100).toFixed(2) + '%' : 'No ingresado'}
-    `;
-
-    // Mostrar el resultado y el resumen
-    document.getElementById('result').innerText = resultText;
-    document.getElementById('summary').innerHTML = summaryText;
+// Alternancia de Pestañas
+function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
 }
 
-
+// Función de Modo Claro/Oscuro/Pastel
 function toggleMode() {
     const body = document.body;
     const calculator = document.querySelector('.calculator');
@@ -54,7 +13,6 @@ function toggleMode() {
     const buttons = document.querySelectorAll('button');
     const button = document.getElementById('toggle-mode');
 
-    // Alternar entre los modos: Claro, Oscuro, y Pastel
     if (body.classList.contains('dark-mode')) {
         body.classList.remove('dark-mode');
         calculator.classList.remove('dark-mode');
@@ -82,17 +40,59 @@ function toggleMode() {
 
         button.textContent = "Modo Pastel";
     }
-
-function showTab(tabId) {
-    const tabs = document.querySelectorAll('.tab-content');
-    tabs.forEach(tab => tab.style.display = 'none'); // Oculta todas las pestañas
-    document.getElementById(tabId).style.display = 'block'; // Muestra la pestaña seleccionada
 }
-    
-let portfolios = JSON.parse(localStorage.getItem('portfolios')) || []; // Cargar carteras guardadas
+
+// Función de la Calculadora
+function calculate() {
+    let DI = parseFloat(document.getElementById('DI').value) || null;
+    let I = (parseFloat(document.getElementById('I').value) || null) / 100;
+    let T = parseFloat(document.getElementById('T').value) || null;
+    let A = parseFloat(document.getElementById('A').value) || null;
+    let CR = (parseFloat(document.getElementById('CR').value) || 0) / 100;
+
+    let resultText = '';
+    let summaryText = '';
+
+    if (DI === null && I !== null && T !== null && A !== null) {
+        DI = A / ((1 + I) ** T);
+        resultText = `El dinero inicial debería ser: ${DI.toFixed(2)}`;
+    } else if (I === null && DI !== null && T !== null && A !== null) {
+        I = (A / DI) ** (1 / T) - 1;
+        resultText = `La tasa de interés diaria debería ser: ${(I * 100).toFixed(2)}%`;
+    } else if (T === null && DI !== null && I !== null && A !== null) {
+        T = Math.log(A / DI) / Math.log(1 + I);
+        resultText = `Con estas variables, llegarías a ese monto en: ${T.toFixed(2)} días`;
+    } else if (A === null && DI !== null && I !== null && T !== null) {
+        A = DI * ((1 + I) ** T);
+        resultText = `El monto acumulado (A) sería: ${A.toFixed(2)}`;
+    } else {
+        document.getElementById('result').innerText = 'Por favor, deja una de las variables vacía.';
+        document.getElementById('summary').innerText = '';
+        return;
+    }
+
+    if (CR > 0 && A !== null) {
+        A = A * (1 - CR);
+        resultText += ` (después del costo de retiro: ${A.toFixed(2)})`;
+    }
+
+    summaryText = `
+        <strong>Resumen de Valores:</strong><br>
+        Dinero Inicial (DI): ${DI ? DI.toFixed(2) : 'N/A'}<br>
+        Interés Diario (I): ${I ? (I * 100).toFixed(2) + '%' : 'N/A'}<br>
+        Tiempo (T): ${T ? T.toFixed(2) : 'N/A'} días<br>
+        Acumulado Final (A): ${A ? A.toFixed(2) : 'N/A'}
+    `;
+
+    document.getElementById('result').innerText = resultText;
+    document.getElementById('summary').innerHTML = summaryText;
+}
+
+// Funciones de Cartera de Inversiones
+let portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
 
 function savePortfolios() {
-    localStorage.setItem('portfolios', JSON.stringify(portfolios)); // Guardar en localStorage
+    localStorage.setItem('portfolios', JSON.stringify(portfolios));
 }
 
 function createNewPortfolio() {
@@ -145,7 +145,4 @@ function renderPortfolios() {
     });
 }
 
-// Renderizar las carteras al cargar la página
 document.addEventListener('DOMContentLoaded', renderPortfolios);
-
-}
