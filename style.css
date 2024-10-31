@@ -129,3 +129,7 @@ button.pastel-mode {
 button.pastel-mode:hover {
     background-color: #ffa07a;
 }
+
+#monto-total {
+    font-weight: bold;
+}
