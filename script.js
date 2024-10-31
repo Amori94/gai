@@ -106,3 +106,18 @@ function toggleMode() {
     button.textContent = button.textContent === "Modo Oscuro" ? "Modo Claro" : "Modo Oscuro";
 }
 
+function showTab(tab) {
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(t => {
+        t.classList.remove('active'); // Ocultar todas las pestañas
+    });
+    document.getElementById(tab).classList.add('active'); // Mostrar la pestaña seleccionada
+
+    // Cambiar el estado activo de las pestañas
+    const pestanas = document.querySelectorAll('.pestana');
+    pestanas.forEach(p => {
+        p.classList.remove('active');
+    });
+    const activePestana = Array.from(pestanas).find(p => p.textContent.toLowerCase() === tab);
+    if (activePestana) activePestana.classList.add('active');
+}
