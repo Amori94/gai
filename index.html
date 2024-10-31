@@ -7,43 +7,48 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="toggle-container">
-            <button id="toggle-mode" onclick="toggleMode()">Modo Oscuro</button>
-        </div>
-        <div class="pestanas">
-            <div class="pestana active" onclick="showTab('calculadora')">Calculadora</div>
-            <div class="pestana" onclick="showTab('carteras')">Carteras</div>
-            <div class="pestana" onclick="showTab('bitacora')">Bitácora</div>
-        </div>
-        
-        <div id="calculadora" class="tab-content active">
-            <h1>Calculadora de Inversión</h1>
-            <input type="number" id="DI" placeholder="Dinero Inicial (DI)">
-            <input type="number" id="I" placeholder="Interés diario (%)">
-            <input type="number" id="T" placeholder="Tiempo (T)">
-            <input type="number" id="A" placeholder="Acumulado (A)">
-            <input type="number" id="CR" placeholder="Costo de Retiro (%) (opcional)">
-            <button onclick="calculate()">Calcular</button>
-            <p id="result"></p>
-        </div>
+    <div class="tabs">
+        <button onclick="showTab('calculator')">Calculadora</button>
+        <button onclick="showTab('portfolio')">Cartera de Inversiones</button>
+        <button onclick="showTab('bitacora')">Bitácora</button>
+    </div>
 
-        <div id="carteras" class="tab-content">
-            <h1>Carteras de Inversión</h1>
-            <input type="text" id="cartera-nombre" placeholder="Nombre de la Cartera">
-            <input type="number" id="monto-inicial" placeholder="Monto Inicial">
-            <button onclick="createCartera()">Crear Cartera</button>
-            <div id="carteras-lista"></div>
-        </div>
-
-        <div id="bitacora" class="tab-content">
-            <h1>Bitácora</h1>
-            <div id="bitacora-contenido">
-                <!-- Aquí se mostrará el historial de transacciones y totales -->
+    <div id="calculator" class="tab-content active">
+        <div class="container">
+            <div class="toggle-container">
+                <button id="toggle-mode" onclick="toggleMode()">Modo Oscuro</button>
+            </div>
+            <div class="calculator">
+                <h1>Calculadora de Inversión</h1>
+                <input type="number" id="DI" placeholder="Dinero Inicial (DI)">
+                <input type="number" id="I" placeholder="Interés diario (%)">
+                <input type="number" id="T" placeholder="Tiempo (T)">
+                <input type="number" id="A" placeholder="Acumulado (A)">
+                <input type="number" id="CR" placeholder="Costo de Retiro (%) (opcional)">
+                <button onclick="calculate()">Calcular</button>
+                <p id="result"></p>
+                <div id="summary"></div>
             </div>
         </div>
     </div>
+
+    <div id="portfolio" class="tab-content" style="display: none;">
+        <h2>Cartera de Inversiones</h2>
+        <input type="text" id="cartera-nombre" placeholder="Nombre de la Cartera">
+        <input type="number" id="monto-inicial" placeholder="Monto Inicial">
+        <input type="number" id="interes-diario" placeholder="Interés Diario (%)">
+        <input type="number" id="meta" placeholder="Meta (%)">
+        <button onclick="createNewPortfolio()">Crear Cartera Nueva</button>
+        <div id="portfolios-list"></div>
+    </div>
+
+    <div id="bitacora" class="tab-content" style="display: none;">
+        <h2>Bitácora</h2>
+        <div id="bitacora-contenido">
+            <!-- Aquí se mostrará el historial de transacciones y totales -->
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
-
