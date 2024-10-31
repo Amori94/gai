@@ -3,6 +3,10 @@ function showTab(tabId) {
     const tabs = document.querySelectorAll('.tab-content');
     tabs.forEach(tab => tab.style.display = 'none');
     document.getElementById(tabId).style.display = 'block';
+    
+    if (tabId === 'portfolios') {
+        renderPortfolioChart(); // Renderiza el gráfico al mostrar la pestaña
+    }
 }
 
 // Función de Modo Claro/Oscuro/Pastel
@@ -146,6 +150,60 @@ function deletePortfolio(index) {
     }
 }
 
+// Función para renderizar el gráfico de torta
+function renderPortfolioChart() {
+    const ctx = document.getElementById('portfolioChart').getContext('2d');
+    const currentAmounts = portfolios.map(portfolio => portfolio.currentAmount);
+    const totalAmount = currentAmounts.reduce((acc, amount) => acc + amount, 0);
+    
+    if (totalAmount === 0) {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        return; // Si no hay carteras, no renderiza nada
+    }
+
+    const labels = portfolios.map(portfolio => portfolio.name);
+    const data = currentAmounts.map(amount => (amount / totalAmount) * 100);
+    
+    // Configuración del gráfico de torta
+    const portfolioChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Distribución de Portafolios',
+                data: data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Distribución de Portafolios'
+                }
+            }
+        }
+    });
+}
+
 function renderPortfolios() {
     const portfoliosList = document.getElementById('portfolios-list');
     portfoliosList.innerHTML = '';
@@ -165,6 +223,7 @@ function renderPortfolios() {
         `;
         
         portfoliosList.appendChild(portfolioDiv);
+        
     });
 }
 
