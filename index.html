@@ -11,7 +11,13 @@
         <div class="toggle-container">
             <button id="toggle-mode" onclick="toggleMode()">Modo Oscuro</button>
         </div>
-        <div class="calculator">
+        <div class="pestanas">
+            <div class="pestana active" onclick="showTab('calculadora')">Calculadora</div>
+            <div class="pestana" onclick="showTab('carteras')">Carteras</div>
+            <div class="pestana" onclick="showTab('bitacora')">Bitácora</div>
+        </div>
+        
+        <div id="calculadora" class="tab-content active">
             <h1>Calculadora de Inversión</h1>
             <input type="number" id="DI" placeholder="Dinero Inicial (DI)">
             <input type="number" id="I" placeholder="Interés diario (%)">
@@ -22,29 +28,19 @@
             <p id="result"></p>
         </div>
 
-        <div class="cartera">
-            <h2 id="titulo">Nombre de la Cartera</h2>
-            <p>Días Activo: <span id="dias-activo">0 meses, 0 semanas, 0 días</span></p>
-            <p>Monto Actual: <span id="monto-actual">0</span></p>
-            <p>Ganancia Diaria: <span id="ganancia-diaria">0</span></p>
-            <p>Ganancia Estimada para el Próximo Día: <span id="ganancia-estimada">0</span></p>
-            
-            <div class="informacion-accesible">
-                <p>Fecha de Creación: <span id="fecha-creacion"></span></p>
-                <p>Rendimiento Acumulado: <span id="rendimiento-acumulado">0% ($0)</span></p>
-                <p>Meta: <span id="meta"></span></p>
-                <p>Notas: <span id="notas"></span></p>
-                <p>Historial de Transacciones: <span id="historial-transacciones"></span></p>
-            </div>
-            
-            <button onclick="ingresarDinero()">Ingresar Dinero</button>
-            <button onclick="verNotas()">Ver Notas</button>
-            <button onclick="verBitacora()">Ver Bitácora</button>
+        <div id="carteras" class="tab-content">
+            <h1>Carteras de Inversión</h1>
+            <input type="text" id="cartera-nombre" placeholder="Nombre de la Cartera">
+            <input type="number" id="monto-inicial" placeholder="Monto Inicial">
+            <button onclick="createCartera()">Crear Cartera</button>
+            <div id="carteras-lista"></div>
+        </div>
 
-            <h3>Total</h3>
-            <p>Total Invertido: <span id="total-invertido">0</span></p>
-            <p>Total Rendimiento: <span id="total-rendimiento">0</span></p>
-            <p>Total General: <span id="total-general">0</span></p>
+        <div id="bitacora" class="tab-content">
+            <h1>Bitácora</h1>
+            <div id="bitacora-contenido">
+                <!-- Aquí se mostrará el historial de transacciones y totales -->
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
