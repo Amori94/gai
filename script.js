@@ -79,9 +79,9 @@ function calculate() {
     summaryText = `
         <strong>Resumen de Valores:</strong><br>
         Dinero Inicial (DI): ${DI ? DI.toFixed(2) : 'N/A'}<br>
-        Interés Diario (I): ${I ? (I * 100).toFixed(2) + '%' : 'N/A'}<br>
+        Tasa de Interés (I): ${(I ? (I * 100).toFixed(2) : 'N/A') + '%' }<br>
         Tiempo (T): ${T ? T.toFixed(2) : 'N/A'} días<br>
-        Acumulado Final (A): ${A ? A.toFixed(2) : 'N/A'}
+        Monto Acumulado (A): ${A ? A.toFixed(2) : 'N/A'}
     `;
 
     document.getElementById('result').innerText = resultText;
@@ -91,27 +91,20 @@ function calculate() {
 // Funciones de Cartera de Inversiones
 let portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
 
-// Función para guardar carteras en localStorage
 function savePortfolios() {
     localStorage.setItem('portfolios', JSON.stringify(portfolios));
 }
 
-// Crear nueva cartera
 function createNewPortfolio() {
-    const name = document.getElementById('cartera-nombre').value;
-    const initialAmount = parseFloat(document.getElementById('monto-inicial').value);
-    const dailyInterest = parseFloat(document.getElementById('interes-diario').value) || 0;
-    const goal = parseFloat(document.getElementById('meta').value) || 0;
-
-    if (name && initialAmount) {
+    const name = prompt("Ingresa el nombre de la nueva cartera:");
+    const initialAmount = parseFloat(prompt("Ingresa el monto inicial:"));
+    
+    if (name && !isNaN(initialAmount)) {
         portfolios.push({
             name: name,
             initialAmount: initialAmount,
             currentAmount: initialAmount,
-            dailyGain: 0,
-            dailyInterest: dailyInterest,
-            goal: goal,
-            creationDate: new Date().toLocaleDateString()
+            dailyGain: 0
         });
         savePortfolios();
         renderPortfolios();
@@ -120,7 +113,6 @@ function createNewPortfolio() {
     }
 }
 
-// Agregar ganancia diaria
 function addDailyGain(index) {
     const gain = parseFloat(prompt("Ingresa la ganancia diaria:"));
     if (!isNaN(gain)) {
@@ -133,7 +125,7 @@ function addDailyGain(index) {
     }
 }
 
-// Retirar dinero de una cartera
+// Nueva función para retirar dinero de una cartera
 function withdrawAmount(index) {
     const withdrawal = parseFloat(prompt("Ingresa la cantidad que deseas retirar:"));
     if (!isNaN(withdrawal) && withdrawal <= portfolios[index].currentAmount) {
@@ -145,7 +137,7 @@ function withdrawAmount(index) {
     }
 }
 
-// Eliminar una cartera
+// Nueva función para eliminar una cartera
 function deletePortfolio(index) {
     if (confirm("¿Estás seguro de que deseas eliminar esta cartera?")) {
         portfolios.splice(index, 1);
@@ -154,7 +146,6 @@ function deletePortfolio(index) {
     }
 }
 
-// Renderizar la lista de carteras
 function renderPortfolios() {
     const portfoliosList = document.getElementById('portfolios-list');
     portfoliosList.innerHTML = '';
@@ -165,12 +156,9 @@ function renderPortfolios() {
         
         portfolioDiv.innerHTML = `
             <h3>${portfolio.name}</h3>
-            <p>Fecha de Creación: ${portfolio.creationDate}</p>
             <p>Monto Inicial: ${portfolio.initialAmount.toFixed(2)}</p>
             <p>Monto Actual: ${portfolio.currentAmount.toFixed(2)}</p>
             <p>Ganancia Diaria: ${portfolio.dailyGain.toFixed(2)}</p>
-            <p>Interés Diario: ${portfolio.dailyInterest.toFixed(2)}%</p>
-            <p>Meta: ${portfolio.goal.toFixed(2)}%</p>
             <button onclick="addDailyGain(${index})">Agregar Ganancia Diaria</button>
             <button onclick="withdrawAmount(${index})">Retirar Dinero</button>
             <button onclick="deletePortfolio(${index})">Eliminar Cartera</button>
