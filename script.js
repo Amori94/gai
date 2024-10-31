@@ -157,7 +157,7 @@ function renderPortfolios() {
         portfolioDiv.innerHTML = `
             <h3>${portfolio.name}</h3>
             <p>Monto Inicial: ${portfolio.initialAmount.toFixed(2)}</p>
-            <p>Monto Actual: ${portfolio.currentAmount.toFixed(2)}</p>
+            <p id="monto-actual">Monto Actual: ${portfolio.currentAmount.toFixed(2)}</p>
             <p>Ganancia Diaria: ${portfolio.dailyGain.toFixed(2)}</p>
             <button onclick="addDailyGain(${index})">Agregar Ganancia Diaria</button>
             <button onclick="withdrawAmount(${index})">Retirar Dinero</button>
