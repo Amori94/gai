@@ -181,4 +181,3 @@ function renderPortfolios() {
 }
 
 document.addEventListener('DOMContentLoaded', renderPortfolios);
-
