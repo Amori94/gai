@@ -19,7 +19,7 @@ body.dark-mode {
 body.pastel-mode {
     background-color: #f7d8d1; /* Color de fondo pastel */
     color: #333; /* Color de texto en modo pastel */
-    background-image: url('images/background-pastel.png');
+    background-image: url('images/background-pastel.jpeg');
 }
 
 .container {
