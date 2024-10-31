@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Inversión</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Agrega Chart.js -->
 </head>
 <body>
     <div class="tabs">
         <button onclick="showTab('calculator')">Calculadora</button>
         <button onclick="showTab('portfolio')">Cartera de Inversiones</button>
+        <button onclick="showTab('portfolios')">Portafolios</button> <!-- Nueva pestaña -->
     </div>
 
     <div id="calculator" class="tab-content active">
@@ -35,6 +37,11 @@
         <h2>Cartera de Inversiones</h2>
         <button onclick="createNewPortfolio()">Crear Cartera Nueva</button>
         <div id="portfolios-list"></div>
+    </div>
+
+    <div id="portfolios" class="tab-content" style="display: none;">
+        <h2>Portafolios</h2>
+        <canvas id="portfolioChart"></canvas> <!-- Canvas para el gráfico -->
     </div>
 
     <script src="script.js"></script>
