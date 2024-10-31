@@ -130,33 +130,6 @@ button.pastel-mode:hover {
     background-color: #ffa07a;
 }
 
-/* Estilos adicionales para los campos de cartera */
-.portfolio-item h3 {
-    margin-top: 0;
-}
-
-.portfolio-item p {
-    margin: 5px 0;
-}
-
-/* Estilo del formulario de nueva cartera */
-#portfolio-form {
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
-}
-
-#portfolio-form input {
-    height: 35px;
-    margin-bottom: 10px;
-}
-
-#portfolio-form button {
-    height: 40px;
-    background-color: #2d862d;
-    color: white;
-}
-
 #portfolio-form button:hover {
     background-color: #66cc66;
 }
