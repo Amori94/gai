@@ -92,6 +92,10 @@ button:hover {
     background-color: #588157;
 }
 
+#home .container {
+    text-align: center;
+}
+
 .calculator.dark-mode, .portfolio-item.dark-mode {
     background: #11181d;
 }
