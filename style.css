@@ -141,3 +141,24 @@ button#toggle-mode.pastel-mode {
     background-color: #3A5A40;
     color: #ffffff;
 }
+
+#log .container {
+    text-align: left;
+}
+
+.log-entry {
+    background: #A3B18A;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: #344E41;
+    font-size: 14px;
+}
+.log-entry.dark-mode {
+    background: #11181d;
+    color: #ffffff;
+}
+.log-entry.pastel-mode {
+    background: #f9dcc4;
+    color: #333;
+}

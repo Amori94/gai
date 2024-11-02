@@ -130,10 +130,11 @@ function createNewPortfolio() {
             currentAmount: initialAmount,
             dailyGain: 0,
             totalWithdrawn: 0,
-            startDate: startDateInput, // Guardar la fecha de inicio
-            dailyInterest: interestInput, // Guardar la tasa de interés o monto fijo
-            isPercentage: isPercentage // Indicar si es porcentaje
+            startDate: startDateInput,
+            dailyInterest: interestInput,
+            isPercentage: isPercentage
         });
+        addLogEntry(`Comienzo de Cartera "${name}" con $${initialAmount.toFixed(2)}`);
         savePortfolios();
         renderPortfolios();
     } else {
@@ -147,6 +148,7 @@ function addDailyGain(index) {
     if (!isNaN(gain)) {
         portfolios[index].currentAmount += gain;
         portfolios[index].dailyGain = gain;
+        addLogEntry(`Ganancia Diaria $${gain.toFixed(2)} en cartera "${portfolios[index].name}"`);
         savePortfolios();
         renderPortfolios();
     } else {
@@ -159,7 +161,8 @@ function withdrawAmount(index) {
     const withdrawal = parseFloat(prompt("Ingresa la cantidad que deseas retirar:"));
     if (!isNaN(withdrawal) && withdrawal <= portfolios[index].currentAmount) {
         portfolios[index].currentAmount -= withdrawal;
-        portfolios[index].totalWithdrawn += withdrawal; // Suma el retiro al total retirado
+        portfolios[index].totalWithdrawn += withdrawal;
+        addLogEntry(`Retiro de $${withdrawal.toFixed(2)} de la cartera "${portfolios[index].name}"`);
         savePortfolios();
         renderPortfolios();
     } else {
@@ -170,6 +173,7 @@ function withdrawAmount(index) {
 // Nueva función para eliminar una cartera
 function deletePortfolio(index) {
     if (confirm("¿Estás seguro de que deseas eliminar esta cartera?")) {
+        addLogEntry(`Eliminación de cartera "${portfolios[index].name}" con monto actual $${portfolios[index].currentAmount.toFixed(2)}`);
         portfolios.splice(index, 1);
         savePortfolios();
         renderPortfolios();
@@ -181,11 +185,19 @@ function calculateTotals() {
     const totalDailyGain = portfolios.reduce((sum, portfolio) => sum + portfolio.dailyGain, 0);
     const totalWithdrawn = portfolios.reduce((sum, portfolio) => sum + (portfolio.totalWithdrawn || 0), 0); // Evita NaN
 
+    // Calcular la ganancia estimada del día sumando todas las ganancias estimadas
+    const estimatedDailyGain = portfolios.reduce((sum, portfolio) => {
+        let estimatedGain = portfolio.isPercentage 
+            ? portfolio.currentAmount * (portfolio.dailyInterest / 100)
+            : portfolio.dailyInterest;
+        return sum + estimatedGain;
+    }, 0);
+
     document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
     document.getElementById('total-daily-gain').textContent = totalDailyGain.toFixed(2);
     document.getElementById('total-withdrawn').textContent = totalWithdrawn.toFixed(2);
+    document.getElementById('estimated-daily-gain').textContent = estimatedDailyGain.toFixed(2); // Mostrar la ganancia estimada del día
 }
-
 
 function renderPortfolios() {
     const portfoliosList = document.getElementById('portfolios-list');
@@ -236,4 +248,38 @@ function renderPortfolios() {
     savePortfolios();
 }
 
-document.addEventListener('DOMContentLoaded', renderPortfolios);
+let logEntries = JSON.parse(localStorage.getItem('logEntries')) || [];
+
+// Función para agregar una entrada al log
+function addLogEntry(description) {
+    const date = new Date().toLocaleDateString('es-ES');
+    logEntries.push({ date, description });
+    localStorage.setItem('logEntries', JSON.stringify(logEntries));
+    renderLog();
+}
+
+// Función para mostrar el log
+function renderLog() {
+    const logList = document.getElementById('log-list');
+    logList.innerHTML = '';
+    
+    logEntries.forEach(entry => {
+        const logEntryDiv = document.createElement('div');
+        logEntryDiv.classList.add('log-entry');
+        
+        // Aplicar estilos según el modo actual
+        if (document.body.classList.contains('dark-mode')) {
+            logEntryDiv.classList.add('dark-mode');
+        } else if (document.body.classList.contains('pastel-mode')) {
+            logEntryDiv.classList.add('pastel-mode');
+        }
+
+        logEntryDiv.innerHTML = `<strong>${entry.date}</strong> - ${entry.description}`;
+        logList.appendChild(logEntryDiv);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderLog(); // Renderiza el log al cargar
+    renderPortfolios();
+});

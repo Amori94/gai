@@ -12,6 +12,7 @@
         <button onclick="showTab('home')">Inicio</button>
         <button onclick="showTab('calculator')">Calculadora</button>
         <button onclick="showTab('portfolio')">Cartera de Inversiones</button>
+        <button onclick="showTab('log')">Log</button>
     </div>
 
     <div id="home" class="tab-content active">
@@ -25,6 +26,7 @@
                 <p>Total del Monto Actual de Inversiones: <span id="total-amount">0.00</span></p>
                 <p>Total de Ganancia Diaria: <span id="total-daily-gain">0.00</span></p>
                 <p>Total Retirado: <span id="total-withdrawn">0.00</span></p>
+                <p>Ganancia Estimada del Día: <span id="estimated-daily-gain"></span></p> <!-- Nueva línea para mostrar la ganancia estimada -->
             </div>
         </div>
     </div>
@@ -49,6 +51,11 @@
         <h2>Cartera de Inversiones</h2>
         <button onclick="createNewPortfolio()">Crear Cartera Nueva</button>
         <div id="portfolios-list"></div>
+    </div>
+
+    <div id="log" class="tab-content" style="display: none;">
+        <h2>Historial de Actividades</h2>
+        <div id="log-list"></div>
     </div>
 
     <script src="script.js"></script>
